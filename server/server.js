@@ -31,7 +31,7 @@ const initializeDbServer = async() => {
         if (!result.length){
             await insertData()
         }
-        const port = 5004 || process.env.PORT;
+        const port = process.env.PORT;
         app.listen(port,()=>{
             console.log("Server is running at http://localhost:5004/")
         })
