@@ -3,12 +3,13 @@ const sqlite3= require("sqlite3")
 const {open} = require("sqlite")
 const path = require("path")
 const cors = require("cors")
+require("dotenv").config()
 
 const app = express();
 
 
 const corsOptions = {
-  origin: 'https://quadb-intern-assignment-84bh.vercel.app',
+  origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   credentials: true, 
 };
@@ -16,7 +17,7 @@ const corsOptions = {
 app.use(express.json());
 app.use(cors(corsOptions))
 let db = null;
-const dbPath = path.join(__dirname,"./database/server.db")
+const dbPath = path.join(__dirname,process.env.DB_PATH)
 
 const initializeDbServer = async() => {
     try{
@@ -24,13 +25,16 @@ const initializeDbServer = async() => {
             filename : dbPath,
             driver : sqlite3.Database
         })
-        app.listen(5004,()=>{
-            console.log("Server is running at http://localhost:5004/")
-        })
+        
+        
         const result = await db.all(`select * from hodlinfo`);
         if (!result.length){
             await insertData()
         }
+        const port = 5004 || process.env.PORT;
+        app.listen(5004,()=>{
+            console.log("Server is running at http://localhost:5004/")
+        })
     }catch(error){
         console.log(`Error : ${error.message}`)
     }
