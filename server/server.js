@@ -6,8 +6,15 @@ const cors = require("cors")
 
 const app = express();
 
+
+const corsOptions = {
+  origin: 'https://quadb-intern-assignment-84bh.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+  credentials: true, 
+};
+
 app.use(express.json());
-app.use(cors())
+app.use(cors(corsOptions))
 let db = null;
 const dbPath = path.join(__dirname,"./database/server.db")
 
