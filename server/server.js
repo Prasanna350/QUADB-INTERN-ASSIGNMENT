@@ -8,14 +8,8 @@ require("dotenv").config()
 const app = express();
 
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-  credentials: true, 
-};
-
 app.use(express.json());
-app.use(cors(corsOptions))
+app.use(cors())
 let db = null;
 const dbPath = path.join(__dirname,process.env.DB_PATH)
 
